@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Нейросеть YOLO находит трещины и выбоины на фото дорожного покрытия">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f4f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)">
+<title>Повреждения дороги</title>
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/icon.svg">
+<link rel="stylesheet" href="/static/app.css?v=5">
+<script src="/static/app.js?v=8" defer></script>
+</head>
+<body>
+<header class="wrap">
+  <h1>Обнаружение повреждений дорожного покрытия</h1>
+  <p>Загрузите фото дороги: нейросеть YOLO отметит предполагаемые повреждения — трещины и выбоины. Фото никуда не сохраняется.</p>
+</header>
+<main class="wrap grid">
+  <section class="card" aria-label="Фото">
+    <div id="drop" tabindex="0" role="button" aria-label="Выбрать или перетащить фото дороги">
+      <div class="hint" id="hint"><b>Перетащите фото сюда</b>или нажмите, чтобы выбрать файл. Можно вставить из буфера (Ctrl+V).<br><span class="small">JPG, PNG, WEBP, HEIC до <span id="maxmb">20</span> МБ</span></div>
+      <canvas id="cv" aria-label="Фото с отмеченными повреждениями"></canvas>
+      <div class="spinner" id="spin" hidden><span class="ring" aria-hidden="true"></span><span id="spintext">Анализ…</span></div>
+    </div>
+    <input type="file" id="file" accept="image/*,.heic,.heif" hidden>
+    <input type="file" id="camera" accept="image/*" capture="environment" hidden>
+    <div class="row">
+      <button type="button" class="primary" id="pick">Выбрать фото</button>
+      <button type="button" class="touch-only" id="shoot">Сфотографировать</button>
+      <button type="button" id="save" disabled>Скачать результат</button>
+    </div>
+    <div class="row">
+      <label for="conf" class="grow">Порог уверенности: <b id="confv">25 %</b>
+        <input type="range" id="conf" min="5" max="90" step="5" value="25">
+      </label>
+      <label class="check"><input type="checkbox" id="labels" checked> подписи на фото</label>
+    </div>
+  </section>
+
+  <aside class="card" aria-label="Результат">
+    <div id="notice" role="status"></div>
+    <div id="error" class="error" role="alert" hidden></div>
+    <h2>Результат</h2>
+    <div class="summary" id="summary"></div>
+    <ul id="list"><li class="muted">Пока нет фото.</li></ul>
+    <p class="small muted" id="meta"></p>
+    <p class="small muted">Сайт отмечает предполагаемые повреждения, но не измеряет их. «Рамка — N % кадра» говорит только о размере рамки на снимке: в квадратные метры это не перевести, а для вывода по ГОСТ Р 50597-2017 нужна ещё и глубина.</p>
+  </aside>
+</main>
+<noscript><p class="wrap error">Для работы сайта включите JavaScript.</p></noscript>
+</body>
+</html>

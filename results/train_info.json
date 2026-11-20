@@ -1,0 +1,11 @@
+{
+ "epochs_run": 30,
+ "best_epoch": 24,
+ "train_minutes": 157.1,
+ "ms_per_image_cpu": {
+  "M0": 129,
+  "M1": 129
+ },
+ "n_train": 645,
+ "n_val": 117
+}
